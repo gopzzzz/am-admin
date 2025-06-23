@@ -34,7 +34,7 @@
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
-                <h5>Occasians</h5>
+                <h5>Occasions</h5>
               
               </div>
               <div class="card-body">
@@ -43,7 +43,7 @@
 
                 <p align="right">
 
- <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">Add Occasians</button>
+ <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">Add Occasions</button>
  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
 <form method="POST"  id="form1" action="{{url('occasiansinsert')}}" enctype="multipart/form-data">
@@ -56,7 +56,7 @@
 
 <div class="modal-header">
 
-<h5 class="modal-title" id="exampleModalLabel">Add Occasian</h5>
+<h5 class="modal-title" id="exampleModalLabel">Add Occasion</h5>
 
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
@@ -71,9 +71,9 @@
 
 <div class="form-group col-sm-12">
 
-<label class="exampleModalLabel">Occasian</label>
+<label class="exampleModalLabel">Occasion</label>
 
-<input class="form-control" name="occasians" placeholder="Enter Occasian" required>
+<input class="form-control" name="occasians" placeholder="Enter Occasion" required>
 
 </div>
 
@@ -93,7 +93,7 @@
   <thead>
 <tr>
                      <th>id</th>
-                    <th>Occasian</th>
+                    <th>Occasion</th>
                   
                     <th>Action</th>    
                   </tr>
@@ -128,7 +128,7 @@
 
                   <tr>
                   <th>id</th>
-                  <th>Occasian</th>
+                  <th>Occasion</th>
                   
                     <th>Action</th>    
                   </tr>
@@ -141,7 +141,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Occasian</h5>
+        <h5 class="modal-title">Edit Occasion</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -153,8 +153,8 @@
 <input type="hidden" name="id" id="occasiansid">
 
       <div class="form-group col-sm-12">
-<label class="exampleModalLabel">Occasian</label>
-<input class="form-control" name="occasians" id="occasians" placeholder="Enter Occasian" required>
+<label class="exampleModalLabel">Occasion</label>
+<input class="form-control" name="occasians" id="occasians" placeholder="Enter Occasion" required>
 </div>
 
 </div>

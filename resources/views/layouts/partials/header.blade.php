@@ -200,7 +200,7 @@
                 <li class="dropdown pc-h-item header-user-profile">
                     <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
                         <img src="{{asset('assets/images/user/avatar-2.jpg')}}" alt="user-image" class="user-avtar">
-                        <span>Silver Woods</span>
+                        <span>Amokha</span>
                     </a>
                     <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
                         <div class="dropdown-header">
@@ -209,7 +209,7 @@
                                     <img src="{{asset('assets/images/user/avatar-2.jpg')}}" alt="user-image" class="user-avtar wid-35">
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h6 class="mb-1">Silver Woods</h6>
+                                    <h6 class="mb-1">Amokha</h6>
                                     <span>Administration</span>
                                 </div>
                                 <a href="{{url('logout')}}" class="pc-head-link bg-transparent"><i class="ti ti-power text-danger"></i></a>
