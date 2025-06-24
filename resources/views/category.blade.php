@@ -24,9 +24,6 @@
         </div>
       </div>
       @if(session('success'))
-
-
-
 <h3 style="margin-left: 19px;color: green;">{{session('success')}}</h3>
 @endif
       <div class="row">
@@ -40,8 +37,7 @@
               <div class="card-body">
                 <div class="dt-responsive table-responsive">
 
-
-                <p align="right">
+   <p align="right">
 
  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">Add Category</button>
  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -66,15 +62,9 @@
 
 </div>
 
-<div class="modal-body row">
-
- 
+<div class="modal-body row"> 
 <div class="form-group col-sm-12">
-
 <label class="exampleModalLabel">Category Name</label>
-
-
-
 <input type="text" class="form-control" name="category_name"  placeholder="Enter Category Name" required>
 </div>
 <div class="form-group col-sm-12">
@@ -100,6 +90,7 @@
                      <th>id</th>
                     <th>Category Name</th>
                     <th>Category Image</th>
+                    <th>Status</th>    
 
                     <th>Action</th>    
                     </tr>
@@ -116,7 +107,10 @@
        <td>{{$key->category_name}}</td>
        <td>        <img src="{{ asset('/images/categories/'.$key->category_image) }}" alt="" width="200" height="100" />
        </td>
-
+   <td>@if($key->status==0) Active
+            @else Inactive 
+            @endif
+          </td>
    
            <td>
                <i class="fa fa-edit edit_category" aria-hidden="true" data-toggle="modal" data-id="{{ $key->id }}"></i>
@@ -133,18 +127,13 @@
        @endphp
        @endforeach
    </tbody>
-                
-               
-                     
-                   
-               
-                  <tfoot>
+     <tfoot>
 
                   <tr>
                   <th>id</th>
                     <th>Category Name</th>
                     <th>Category Image</th>
-
+                    <th>Status</th>    
                     <th>Action</th>    
 
                   </tr>
@@ -173,16 +162,19 @@
 <div class="form-group col-sm-12">
 
 <label class="exampleModalLabel">Category Name</label>
-
-
-
 <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Enter Category Name"  required>
 </div>
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
 <label class="exampleModalLabel">Category Image</label>
                 <input type="file" name="categoryimage" accept="image/*" id="categoryimage">
               </div>
-
+ <div class="form-group col-sm-12">
+ <label class="exampleModalLabel">Status</label>
+<select name="status" id="status" class="form-control"  required>
+<option value="0">Active</option>
+<option value="1">In Active</option>
+</select>
+</div>
 </div>
   <div class="modal-footer">
 

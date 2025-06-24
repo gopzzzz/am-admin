@@ -118,6 +118,7 @@
                     <th>SubCategory</th>
                     <th>Product Category</th>
                     <th>Image</th>
+                    <th>Status</th>
                     <th>Action</th>    
                     </tr>
                 </thead>
@@ -138,7 +139,10 @@
               <td>{{ $key->subcategory_name }}</td>
               <td>{{ $key->product_category_name }}</td>
               <td><img src="{{ asset('/images/categories/'.$key->category_image) }}" alt=""  width="200" height="100" /></td> 
-              <td>
+               <td>@if($key->status==0) Active
+            @else Inactive 
+            @endif
+          </td><td>
               <i class="fa fa-edit edit_productcategory"
    aria-hidden="true"
    data-toggle="modal"
@@ -159,6 +163,7 @@
                     <th>SubCategory</th>
                     <th>Product Category</th>
                     <th>Image</th>
+                     <th>Status</th>
                     <th>Action</th>    
 
                   </tr>
@@ -206,7 +211,13 @@
 				  <label class="exampleModalLabel">Product Category Image</label>
 													<input type="file" name="productcategoryimage" accept="image/*" id="productcategoryimage">
 												</div>
-
+<div class="form-group col-sm-12">
+ <label class="exampleModalLabel">Status</label>
+<select name="status" id="status" class="form-control"  required>
+<option value="0">Active</option>
+<option value="1">In Active</option>
+</select>
+</div>
 
 </div>
   <div class="modal-footer">

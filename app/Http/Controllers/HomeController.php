@@ -293,7 +293,7 @@ class HomeController extends Controller
     {
         $mark = new categories();
         $mark->cat_id = 0;
-
+        $mark->status = 0;
         $mark->category_name = $request->category_name;
         if ($files = $request->file("categoryimage")) {
             $name = $files->getClientOriginalName();
@@ -318,6 +318,7 @@ class HomeController extends Controller
         $id = $request->id;
         $markk = categories::find($id);
         $markk->category_name = $request->category_name;
+        $markk->status = $request->status;
 
         if ($files = $request->file("categoryimage")) {
             $name = $files->getClientOriginalName();
@@ -337,8 +338,6 @@ class HomeController extends Controller
             $mark = DB::table("categories")
                 ->where("cat_id", 0) 
                 ->get();
-        
-           
             $market = DB::table("categories as product_cat")
                 ->join("categories as sub_cat", "product_cat.cat_id", "=", "sub_cat.id")
                 ->join("categories as cat", "sub_cat.cat_id", "=", "cat.id")
@@ -346,6 +345,7 @@ class HomeController extends Controller
                     "product_cat.id",
                     "product_cat.category_name as product_category_name",
                     "product_cat.category_image",
+                    "product_cat.status",
                     "sub_cat.category_name as subcategory_name",
                     "cat.category_name as category_name"
                 )
@@ -381,6 +381,7 @@ class HomeController extends Controller
         $mark = new categories();
         $mark->category_name = $request->productcategory_name;
         $mark->cat_id = $request->subcategory;
+        $mark->status = 0;
         if ($files = $request->file("productcategoryimage")) {
             $name = $files->getClientOriginalName();
             $files->move("images/categories/", $name);
@@ -434,6 +435,7 @@ class HomeController extends Controller
                 'category_id' => $maincat ? $maincat->id : null,
                 'subcategory_id' => $subcategory ? $subcategory->id : null,
                 'image' => $product->category_image,
+                 'status' => $product->status,
             ]);
         }
         public function productcategoryupdate(Request $request)
@@ -449,6 +451,8 @@ class HomeController extends Controller
             $updateData = [
                 'cat_id' => $request->subcategory,
                 'category_name' => $request->productcategoryname,
+                'status' => $request->status,
+
             ];
         
             if ($request->hasFile('productcategoryimage')) {

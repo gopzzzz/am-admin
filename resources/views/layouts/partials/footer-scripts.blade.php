@@ -155,6 +155,7 @@ $('.edit_category').click(function(){
           var obj=JSON.parse(res)
 		  $('#categoryid').val(obj.id);
           $('#category_name').val(obj.category_name);
+          $('#status').val(obj.status);
 
          
 					},
@@ -259,8 +260,9 @@ $(document).ready(function () {
                 id: id
             },
             success: function (res) {
-              
+        
                 $('#marketproid').val(res.id);
+               $('#status').val(res.status);
                 $('#productcategoryname').val(res.productcategoryname);
                 $('#category_name').val(res.category_id).trigger('change');
                  const subcategoryInterval = setInterval(function () {
