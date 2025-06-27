@@ -425,5 +425,39 @@ $('.edit_variant').click(function(){
     $('#editvariant_modal').modal('hide');
 });
 
-  
+ 
+    $(function () {
+
+    function filterSubcats() {
+        const catId = $('#category').val();
+        $('#subcategory option').each(function () {
+            const ok = !$(this).data('parent') || $(this).data('parent') == catId;
+            $(this).toggle(ok);
+        });
+    }
+
+    function filterProdCats() {
+        const subId = $('#subcategory').val();
+        $('#productcategory option').each(function () {
+            const ok = !$(this).data('parent') || $(this).data('parent') == subId;
+            $(this).toggle(ok);
+        });
+    }
+
+    $('#category').on('change', function () {
+        $('#subcategory').val('');          // reset lower selects
+        $('#productcategory').val('');
+        filterSubcats();
+        filterProdCats();
+    });
+
+    $('#subcategory').on('change', function () {
+        $('#productcategory').val('');
+        filterProdCats();
+    });
+
+    /* run once on page load so lists start filtered */
+    filterSubcats();
+    filterProdCats();
+});
     </script>

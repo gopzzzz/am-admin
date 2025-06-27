@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use DB;
@@ -367,7 +368,8 @@ class HomeController extends Controller
         public function fetchProductCategory(Request $request)
        {
         $subCategoryId = $request->subcategoryId;
-        $productCategories = DB::table('categories')->where('cat_id', $subCategoryId)->get();
+        $productCategories = DB::table('categories')->where('cat_id', $subCategoryId)
+        ->where('status', 0)->get();
         return response()->json($productCategories);
         }
 
@@ -466,7 +468,7 @@ class HomeController extends Controller
         
             return redirect()->back()->with('success', 'Product category updated successfully!');
         }
-        
+ 
         public function banner()
         {
         $mark = DB::table("banners")
@@ -562,6 +564,7 @@ class HomeController extends Controller
             ->get();
             $mark = DB::table("categories")
             ->where("cat_id", 0)
+            ->where("status", 0)
             ->get();
     
             return view("product",compact('mark','markk'));
@@ -649,7 +652,7 @@ class HomeController extends Controller
             return response()->json($product);
         }   
         
-        public function productedit(Request $request)
+        public function edittproduct(Request $request)
         {
          $id = $request->id;
          $markk = products::find($id);
@@ -668,6 +671,128 @@ class HomeController extends Controller
              "success",
              "Product edited successfully."
          );    }
+      
+
+         public function editproduct(Request $request)
+         {
+         $request->validate([
+        'id'               => 'required|integer|exists:products,id',
+        'product_code'     => 'required|string|max:255',
+        'product_name'     => 'required|string|max:255',
+        'category'         => 'required|integer',
+        'subcategory'      => 'required|integer',
+        'productcategory'  => 'required|integer',
+        'thumbnail'        => 'nullable|image|max:2048',
+        'images.*'         => 'nullable|image|max:2048',
+        'delete_images'    => 'nullable|array',
+        'delete_images.*'  => 'integer|exists:product_images,id',
+         ]);
+
+         DB::table('products')->where('id', $request->id)->update([
+        'product_code'   => $request->product_code,
+        'product_name'   => $request->product_name, 
+        'cat_id'         => $request->productcategory, 
+        'updated_at'     => now(),
+         ]);
+
+         $product = DB::table('products')->where('id', $request->id)->first();
+
+         if ($request->hasFile('thumbnail')) {
+         $file = $request->file('thumbnail');
+         $name = time() . '_' . $file->getClientOriginalName(); 
+         $file->move('images/products/', $name); 
+
+        DB::table('products')->where('id', $request->id)->update([
+        'thumbnail' => $name
+        ]);
+        }
+
+        if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $image) {
+        $filename = time() . '_' . $image->getClientOriginalName();
+        $image->move('images/products/',  $filename);
+
+        DB::table('product_images')->insert([
+            'product_id'    => $request->id,
+            'product_image' => $filename, 
+            'created_at'    => now(),
+            'updated_at'    => now(),
+        ]);
+        }
+        }
+
+        if ($request->filled('delete_images')) {
+        $images = DB::table('product_images')
+                ->whereIn('id', $request->delete_images)
+                ->get();
+
+       foreach ($images as $img) {
+        $filePath = public_path($img->product_image);
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+       }
+
+         DB::table('product_images')
+        ->whereIn('id', $request->delete_images)
+        ->delete();
+        }
+
+        return back()->with('success', 'Product updated successfully');
+        }
+
+   
+        public function productedit($productId)
+        {
+   
+        $product = DB::table('products')
+        ->leftJoin('categories as pc', 'products.cat_id', '=', 'pc.id')   
+        ->leftJoin('categories as sc', 'pc.cat_id', '=', 'sc.id')        
+        ->leftJoin('categories as c',  'sc.cat_id', '=', 'c.id')         
+        ->where('products.id', $productId)
+        ->select(
+            'products.*',
+            'pc.id as product_category_id',
+            'pc.category_name as product_category_name',
+            'sc.id as subcategory_id',
+            'sc.category_name as subcategory_name',
+            'c.id as category_id',
+            'c.category_name as category_name'
+        )
+        ->first();
+       
+        $market1 = DB::table("product_images")
+            ->where("product_id", $productId)
+            ->get();
+
+        $markk = DB::table('categories')
+        ->where(function($q){
+            $q->whereNull('cat_id')
+              ->orWhere('cat_id', 0);         
+        })
+        ->orderBy('category_name')
+        ->get();
+
+        $subcategories = DB::table('categories')
+        ->whereIn('cat_id', $markk->pluck('id')->toArray())  
+        ->orderBy('category_name')
+        ->get();
+
+        $productCategories = DB::table('categories')
+        ->whereIn('cat_id', $subcategories->pluck('id')->toArray())  
+        ->orderBy('category_name')
+        ->get();
+
+         return view('productedit', [
+        'product'           => $product,
+        'markk'             => $markk,
+        'subcategories'     => $subcategories,
+        'productCategories' => $productCategories,
+        'market1'           => $market1
+
+         ]);
+         }
+
          public function varients($productId, $productname)
          {
             

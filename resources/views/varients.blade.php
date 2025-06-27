@@ -185,7 +185,8 @@
                <i class="fa fa-edit edit_variant" aria-hidden="true" data-toggle="modal" data-id="{{ $key->id }}"></i>
             
    </td>
-  
+
+
     </tr>
        @php
        $i++;

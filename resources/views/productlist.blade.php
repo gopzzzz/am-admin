@@ -39,12 +39,7 @@
               </div>
               <div class="card-body">
                 <div class="dt-responsive table-responsive">
-
-
-                <p align="right">
-
-
-
+ <p align="right">
 </div>
               </p>
 </div>
@@ -72,15 +67,22 @@
        <td>{{$key->product_name}}</td>
        <td>{{ $key->category }}</td>     
 
-       <td>        <img src="{{ asset('/images/products/'.$key->thumbnail) }}" alt="" width="200" height="100" />
+       <td>        <img src="{{ asset('images/products/'.$key->thumbnail) }}" alt="" width="200" height="100" />
        </td>
 
-   
+<!--    
            <td>
                <i class="fa fa-edit edit_product" aria-hidden="true" data-toggle="modal" data-id="{{ $key->id }}"></i>
             
-   </td>
-   <td style="width: 50px;">
+   </td> -->
+   <td>
+    <a href="{{ route('productedit', ['productId' => $key->id ]) }}" 
+       class="btn btn-outline-success btn-lg productedit" 
+       target="_blank">
+       Edit
+    </a>
+</td>
+<td style="width: 50px;">
 
 <a href="{{ route('varients', ['productId' => $key->id, 'productname' => $key->product_name]) }}" class="btn btn-success btn-sm order_trans">Add Variants</a>
 
@@ -119,7 +121,7 @@
         </button>
         
       </div>
-      <form method="POST" action="{{url('productedit')}}" enctype="multipart/form-data" name="productedit">
+      <form method="POST" action="{{url('editproduct')}}" enctype="multipart/form-data" name="productedit">
 
 @csrf
       <div class="modal-body row">

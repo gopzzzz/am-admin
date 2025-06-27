@@ -130,3 +130,7 @@ Route::post('/variantsfetch', [App\Http\Controllers\HomeController::class, 'vari
 Route::post('/variantsinsert', [App\Http\Controllers\HomeController::class, 'variantsinsert'])->name('variantsinsert');
 
 Route::post('/variantsedit', [App\Http\Controllers\HomeController::class, 'variantsedit'])->name('variantsedit');
+
+
+Route::get('/productedit/{productId}', [App\Http\Controllers\HomeController::class, 'productedit'])->name('productedit');
+Route::post('/editproduct', [App\Http\Controllers\HomeController::class, 'editproduct'])->name('editproduct');
